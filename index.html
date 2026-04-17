@@ -89,10 +89,91 @@
     .hero {
       width: 100%;
       height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 340px 1fr;
       position: relative;
+      background: #f5f0ea;
       overflow: hidden;
-      background: linear-gradient(180deg, #aecfdc 0%, #c0dae4 35%, #d4c8b8 70%, #c8b8a4 100%);
     }
+
+    /* watercolor blobs */
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      pointer-events: none;
+    }
+    .blob-1 { width: 420px; height: 420px; background: rgba(180,215,235,0.4); top: -80px; left: -100px; animation: drift1 14s ease-in-out infinite; }
+    .blob-2 { width: 320px; height: 320px; background: rgba(245,200,170,0.35); top: 40px; right: -60px; animation: drift2 17s ease-in-out infinite; }
+    .blob-3 { width: 260px; height: 260px; background: rgba(200,230,200,0.28); bottom: 60px; left: 20%; animation: drift1 20s ease-in-out infinite reverse; }
+    .blob-4 { width: 220px; height: 220px; background: rgba(230,200,240,0.25); bottom: -40px; right: 18%; animation: drift2 12s ease-in-out infinite; }
+
+    @keyframes drift1 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      33% { transform: translate(24px,-16px) scale(1.04); }
+      66% { transform: translate(-16px,12px) scale(0.97); }
+    }
+    @keyframes drift2 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      33% { transform: translate(-20px,16px) scale(1.03); }
+      66% { transform: translate(16px,-12px) scale(0.98); }
+    }
+
+    /* center photo column */
+    .hero-photo-col {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .hero-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+
+    /* left — title */
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 2rem 6rem 4rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* right — vertical nav */
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-end;
+      padding: 5rem 3rem 0 1rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-nav-vert {
+      writing-mode: vertical-rl;
+      display: flex;
+      flex-direction: row;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .hero-nav-vert a {
+      font-family: var(--zen);
+      font-size: 13px;
+      color: var(--text-light);
+      text-decoration: none;
+      letter-spacing: 0.2em;
+      transition: color 0.2s;
+    }
+
+    .hero-nav-vert a:hover { color: var(--text); }
 
     .hero-photo {
       position: absolute;
@@ -102,46 +183,17 @@
       object-position: center 20%;
     }
 
-    .sky-blob {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.55);
-      filter: blur(18px);
-    }
-
-    .hero-ground {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 45%;
-      background: linear-gradient(180deg, transparent, rgba(180,160,130,0.35));
-    }
-
-    .hero-photo-label {
-      position: absolute;
-      bottom: 38%; left: 50%;
-      transform: translateX(-50%);
-      font-family: var(--zen);
-      font-size: 12px;
-      color: rgba(255,255,255,0.6);
-      letter-spacing: 0.18em;
-      white-space: nowrap;
-    }
-
     .title-block {
-      position: absolute;
-      bottom: 12%;
-      left: 6%;
-      z-index: 5;
       opacity: 0;
       animation: fadeUp 1s ease forwards 0.4s;
     }
 
     .title-hand {
       font-family: var(--klee);
-      font-size: clamp(28px, 5vw, 52px);
+      font-size: clamp(26px, 3.5vw, 44px);
       font-weight: 600;
       color: #7a6358;
-      line-height: 1.3;
+      line-height: 1.35;
       letter-spacing: 0.04em;
       transform: rotate(-1deg);
       display: block;
@@ -170,7 +222,7 @@
     .scroll-hint {
       position: absolute;
       bottom: 2rem;
-      right: 4%;
+      right: 2rem;
       z-index: 5;
       display: flex;
       flex-direction: column;
@@ -191,8 +243,13 @@
 
     /* ── SECTIONS ── */
     .section {
-      padding: 6rem 6%;
+      padding: 6rem 2rem;
       border-top: 0.5px solid var(--border);
+    }
+
+    .section-inner {
+      max-width: 860px;
+      margin: 0 auto;
     }
 
     .section-alt { background: var(--bg-alt); }
@@ -221,22 +278,18 @@
     /* ── ABOUT — PC: 2 col ── */
     .about-grid {
       display: grid;
-      grid-template-columns: 1fr 1.5fr;
-      gap: 5rem;
-      align-items: start;
+      grid-template-columns: 220px 1fr;
+      gap: 4rem;
+      align-items: center;
     }
 
     .about-photo-wrap {
+      width: 220px;
       aspect-ratio: 3/4;
       background: linear-gradient(145deg, #e0d0c0, #c8d8e4);
       border-radius: 2px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--zen);
-      font-size: 12px;
-      color: rgba(100,80,70,0.45);
-      letter-spacing: 0.12em;
+      overflow: hidden;
+      flex-shrink: 0;
     }
 
     .about-name {
@@ -257,7 +310,7 @@
     }
 
     .about-body {
-      font-size: 14px;
+      font-size: 16px;
       color: var(--text-mid);
       line-height: 2.2;
     }
@@ -509,13 +562,16 @@
       .nav-links { display: none; }
       .hamburger { display: flex; }
 
-      .title-block { bottom: 10%; left: 1.4rem; }
-      .scroll-hint { right: 1.4rem; }
+      .hero { grid-template-columns: 1fr; grid-template-rows: 60vh auto; height: auto; }
+      .hero-photo-col { height: 60vh; grid-row: 1; }
+      .hero-left { grid-row: 2; padding: 2rem 1.4rem 3rem; }
+      .hero-right { display: none; }
+      .scroll-hint { right: 1.4rem; bottom: auto; top: calc(60vh - 80px); }
+      .blob-1, .blob-2, .blob-3, .blob-4 { display: none; }
 
       .section { padding: 3.5rem 1.4rem; }
-
       .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-      .about-photo-wrap { aspect-ratio: 4/3; }
+      .about-photo-wrap { width: 100%; aspect-ratio: 4/3; }
 
       .works-grid { grid-template-columns: 1fr; }
       .works-grid .work-item { padding: 1.25rem 0; }
@@ -545,14 +601,34 @@
 
   <!-- HERO -->
   <div class="hero">
-    <img class="hero-photo" src="hero.jpg" alt="hero">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="blob blob-4"></div>
 
-    <div class="title-block">
-      <span class="title-hand">AYUMIの<br>ポートフォリオ</span>
-      <div class="title-sub">
-        <div class="title-sub-line"></div>
-        <div class="title-sub-text">FREELANCE WRITER<br>EDITOR</div>
+    <!-- left: title -->
+    <div class="hero-left">
+      <div class="title-block">
+        <span class="title-hand">AYUMIの<br>ポートフォリオ</span>
+        <div class="title-sub">
+          <div class="title-sub-line"></div>
+          <div class="title-sub-text">FREELANCE WRITER<br>TRAVEL PLANNER</div>
+        </div>
       </div>
+    </div>
+
+    <!-- center: photo -->
+    <div class="hero-photo-col">
+      <img class="hero-photo" src="hero.jpg" alt="hero">
+    </div>
+
+    <!-- right: vertical nav -->
+    <div class="hero-right">
+      <ul class="hero-nav-vert">
+        <li><a href="#about">わたしのこと</a></li>
+        <li><a href="#works">書いたもの</a></li>
+        <li><a href="#contact">お問い合わせ</a></li>
+      </ul>
     </div>
 
     <div class="scroll-hint">
@@ -576,11 +652,12 @@
 
   <!-- ABOUT -->
   <section class="section reveal" id="about">
-    <div class="sec-header">
-      <span class="sec-num">01</span>
-      <span class="sec-title">わたしのこと</span>
-    </div>
-    <div class="about-grid">
+    <div class="section-inner">
+      <div class="sec-header">
+        <span class="sec-num">01</span>
+        <span class="sec-title">わたしのこと</span>
+      </div>
+      <div class="about-grid">
       <div class="about-photo-wrap"><img src="profile.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:2px;" alt="profile"></div>
       <div>
         <div class="about-name">AYUMI</div>
@@ -621,11 +698,12 @@
 
   <!-- WORKS -->
   <section class="section section-alt reveal" id="works">
-    <div class="sec-header">
-      <span class="sec-num">02</span>
-      <span class="sec-title">書いたもの</span>
-    </div>
-    <div class="works-grid">
+    <div class="section-inner">
+      <div class="sec-header">
+        <span class="sec-num">02</span>
+        <span class="sec-title">書いたもの</span>
+      </div>
+      <div class="works-grid">
       <div class="work-item">
         <div class="wi-cat">Yahoo! JAPAN</div>
         <a class="wi-title wi-link" href="https://news.yahoo.co.jp/expert/articles/a94dfe820599c0d268ee4676c69d08e66a8c017d" target="_blank">歴史に興味ゼロだった母が夢中に。百名城めぐりという新しい旅のかたち</a>
@@ -657,15 +735,17 @@
         <div class="wi-meta">旅行・観光 / 北海道</div>
       </div>
     </div>
+    </div>
   </section>
 
   <!-- CONTACT -->
   <section class="section reveal" id="contact">
-    <div class="sec-header">
-      <span class="sec-num">03</span>
-      <span class="sec-title">お問い合わせ</span>
-    </div>
-    <div class="contact-grid">
+    <div class="section-inner">
+      <div class="sec-header">
+        <span class="sec-num">03</span>
+        <span class="sec-title">お問い合わせ</span>
+      </div>
+      <div class="contact-grid">
       <div>
         <div class="contact-big">お気軽に<br>ご相談を。</div>
         <p class="contact-note">
@@ -705,6 +785,7 @@
         </div>
         <button class="cf-btn" type="submit">送信する</button>
       </form>
+    </div>
     </div>
   </section>
 
